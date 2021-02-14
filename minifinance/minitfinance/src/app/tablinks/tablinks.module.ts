@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { TablinksPageRoutingModule } from './tablinks-routing.module';
 
 import { TablinksPage } from './tablinks.page';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TablinksPageRoutingModule
+    TablinksPageRoutingModule,
+    HttpClientModule
   ],
   declarations: [TablinksPage]
 })
