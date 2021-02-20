@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title>Log Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  >
+  <form  #logForm="ngForm" (ngSubmit)="log(logForm.value)">
+    
+          <div>
+  
+            <div class="row">
+             
+              <ion-item class="form-group">
+            <label class="control-label" for="Group">Group:</label>
+            <select *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)" class="form-control input-lg" id="group">
+            <option value="0">Select Group</option>
+            <option *ngFor="let group of getGroups()" value= {{group.id}}>{{group.name}}</option>
+            </select>
+          </ion-item>
+             
+            <ion-item class="form-group">
+            <label class="control-label" for="Users">Users:</label>
+            <select *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)" class="form-control input-lg" id="user">
+            <option value="0">Select User</option>
+            <option *ngFor="let user of users" value= {{user.id}}>{{user.name}}</option>
+            </select>
+          </ion-item>
+            <ion-item>
+              <ion-input name="collectionAmount" type="number" [ngModel]="log.collectionAmount" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input name="actualDate" type="date" [ngModel]="log.actualDate" required></ion-input>
+            </ion-item>
+
+            <div padding>
+              <ion-button size="large" type="submit" [disabled]="logForm.invalid" expand="block">submit</ion-button>
+            </div>
+             
+            </div>
+            </div>
+        
+  </form>
+</ion-content>
