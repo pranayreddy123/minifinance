@@ -20,13 +20,14 @@ export class DashboardPage implements OnInit {
   users = [];
    
   submit(log: Object) {
-    alert(JSON.stringify(log))
+   alert(JSON.stringify(log))
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
         //'Authorization': 'my-auth-token'
       })
     };
+   // console.log(JSON.stringify(log))
     
 
     this.http.post(

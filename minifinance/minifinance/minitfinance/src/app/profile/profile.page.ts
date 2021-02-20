@@ -20,6 +20,7 @@ export class ProfilePage implements OnInit {
         //'Authorization': 'my-auth-token'
       })
     };
+    console.log(JSON.stringify(user))
     
     
 
@@ -48,7 +49,7 @@ export class ProfilePage implements OnInit {
       })
     };
     
-
+    console.log(JSON.stringify(group))
     this.http.post(
       "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/createUser",JSON.stringify(group), httpOptions 
    ).subscribe(data => {
