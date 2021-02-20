@@ -6,7 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-
+  loanAmount=0;
+  totalAmount=0;
+  interestAmount=0;
+  rateOfInterest=0;
+  pendingAmount=0;
+  profitAmount=0;
   constructor() { }
 
   ngOnInit() {

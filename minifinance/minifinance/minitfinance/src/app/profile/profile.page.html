@@ -26,27 +26,31 @@
           </div>
           <div padding>
             <ion-item>
-              <ion-input name="groupName"  type="text" [ngModel]="group.groupName" required></ion-input>
+              <ion-input name="groupName" placeholder="groupName" type="text" [ngModel]="group.groupName" required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="duration" type="number" [ngModel]="group.duration" required></ion-input>
+              <ion-input name="duration" placeholder="duration" type="number" [ngModel]="group.duration" required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="startDate" type="date" [ngModel]="group.startDate" required></ion-input>
+              <ion-input name="startDate" placeholder="startDate" type="date" [ngModel]="group.startDate" required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="endDate" type="date" [ngModel]="group.endDate" required></ion-input>
+              <ion-input name="endDate" placeholder="endDate" type="date" [ngModel]="group.endDate" required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="loanAmount" type="number" [ngModel]="group.loanAmount" required></ion-input>
+              <ion-input name="loanAmount" placeholder="loanAmount" type="number" [ngModel]="group.loanAmount" required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="interestRate" type="number" [ngModel]="group.interestRate" required></ion-input>
+              <ion-input name="interestRate" placeholder="interestRate" type="number" [ngModel]="group.interestRate" required></ion-input>
             </ion-item>
+            <ion-item>
+              <ion-input name="investment" placeholder="investment" type="number" [ngModel]="group.investment" required></ion-input>
+            </ion-item>
+          
 
           </div>
           <div padding>
-            <ion-button size="large" type="submit" [disabled]="groupForm.valid" expand="block">Submit</ion-button>
+            <ion-button size="large" type="submit" [disabled]="!groupForm.valid" expand="block">Submit</ion-button>
           </div>
         </ion-col>
       </ion-row>
@@ -55,7 +59,7 @@
 
 </div>
 <div *ngIf="type=='user'">
-  <form #userForm="ngForm" (ngSubmit)="submitUser(userForm)">
+  <form #userForm="ngForm" (ngSubmit)="submitUser(userForm.value)">
     <ion-grid>
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
@@ -64,30 +68,30 @@
           </div>
           <div padding>
             <ion-item>
-              <ion-input name="fname"  [value]="text" type="text" [ngModel]="user.firstName" required></ion-input>
+              <ion-input name="fname"  placeholder="firstName" type="text" [ngModel]="user.firstName" required></ion-input>
             </ion-item>
             
             <ion-item>
-              <ion-input name="lname" type="text" [ngModel]="user.lastName" required></ion-input>
+              <ion-input name="lname" placeholder="lastName" type="text" [ngModel]="user.lastName" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input name="address" type="text" [ngModel]="user.address" required></ion-input>
+              <ion-input name="address" placeholder="address" type="text" [ngModel]="user.address" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input name="phoneNumber" type="text" [ngModel]="user.phoneNumber" required></ion-input>
+              <ion-input name="phoneNumber" placeholder="phoneNumber" type="number" [ngModel]="user.phoneNumber" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input name="aadharNumber" type="text" [ngModel]="user.aadharNumber" required></ion-input>
+              <ion-input name="aadharNumber" placeholder="aadharNumber" type="text" [ngModel]="user.aadharNumber" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input name="dowo" type="text" [ngModel]="user.dowo" required></ion-input>
+              <ion-input name="dowo" placeholder="Do/Wo" type="text" [ngModel]="user.dowo" required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="email" type="email" [ngModel]="user.email" required></ion-input>
+              <ion-input name="email" placeholder="email" type="email" [ngModel]="user.email" required></ion-input>
             </ion-item>
 
           </div>
