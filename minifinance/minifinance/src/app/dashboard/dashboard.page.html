@@ -13,7 +13,7 @@
              
               <ion-item class="form-group">
             <label class="control-label" for="Group">Group:</label>
-            <select name="sgroup" *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)" class="form-control input-lg" id="group">
+            <select name="group" *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)" class="form-control input-lg" id="group">
             <option value="0">Select Group</option>
             <option *ngFor="let group of getGroups()" value= {{group.id}}>{{group.name}}</option>
             </select>
@@ -21,7 +21,7 @@
              
             <ion-item class="form-group">
             <label class="control-label" for="Users">Users:</label>
-            <select name="suser" *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)" class="form-control input-lg" id="user">
+            <select name="user" *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)" class="form-control input-lg" id="user">
             <option value="0">Select User</option>
             <option *ngFor="let user of users" value= {{user.id}}>{{user.name}}</option>
             </select>

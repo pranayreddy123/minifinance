@@ -1,17 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { IonicSelectableComponent } from 'ionic-selectable';
 
+class User {
+  public id: number;
+  public name: string;
+}
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  group: Object = {'groupName':String,'duration':Number,'startDate':Date,'endDate':Date,'loanAmount':Number,'interestRate':Number,'investment':Number};
+  group: any = {'groupName':String,'duration':Number,'startDate':Date,'endDate':Date,'loanAmount':Number,'interestRate':Number,'investment':Number,'groupUsers':[]};
   user: Object = {'firstName':String,'lastName':Number,'address':String,'phoneNumber':Number,'aadharNumber':String,'dowo':String,'email':String};
   type: string = "";
-  constructor(private http: HttpClient) { }
+  isItemAvailable = false;
+  users: User[];
+  selectedUser: User;
+  selectedGroupUsers:[]
+
+  constructor(private http: HttpClient) {  
+  this.users = [
+    { id: 1, name: 'pedi, reddy' },
+    { id: 2, name: 'praharsh' },
+    { id: 3, name: 'Swathi' },
+    { id: 4, name: 'Sandhya' },
+    { id: 5, name: 'Mallesh' },
+    { id: 6, name: 'Sanvi' },
+    { id: 7, name: 'John' },
+    { id: 8, name: 'Ravi' },
+    { id: 9, name: 'Raj Kumar' },
+    { id: 10, name: 'Reddy reddy' },
+    { id: 11, name: 'Anugu, reddy' },
+    { id: 12, name: 'Bala, raju' }
+  ];}
+  userChange(event: {
+    component: IonicSelectableComponent,
+    value: any
+  }) {
+   this.selectedGroupUsers = event.value;
+   // alert(JSON.stringify(event.value));
+  }
   submitUser(user: Object) {
     alert(JSON.stringify(user))
     const httpOptions = {
@@ -39,8 +70,8 @@ export class ProfilePage implements OnInit {
 
   }
 
-  submitGroup(group: Object) {
-    
+  submitGroup(group: any) {
+    group.groupUsers=this.selectedGroupUsers;
     alert(JSON.stringify(group))
     const httpOptions = {
       headers: new HttpHeaders({
@@ -62,8 +93,20 @@ export class ProfilePage implements OnInit {
 
   }
 
-  ngOnInit() {
+  getUsers() {
+    return [
+    { id: 1, name: 'User1 ' },
+    { id: 2, name: 'User2 ' },
+    { id: 3, name: 'User3' },
+    { id: 4, name: 'User4' },
+    { id: 5, name: 'User5' },
+    { id: 6, name: 'User6' },
+    ]
+    }
 
+
+  ngOnInit() {
+    
     this.group = {'groupName':null,'duration':null,'startDate':null,'endDate':null,'loanAmount':null,'interestRate':null};
     this.user= {'firstName':null,'lastName':null,'address':null,'phoneNumber':null,'aadharNumber':null,'dowo':null,'email':null};
   }
