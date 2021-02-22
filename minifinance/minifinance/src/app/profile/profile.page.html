@@ -34,12 +34,12 @@
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="startDate" placeholder="startDate" type="date" [ngModel]="group.startDate" required>
-                </ion-input>
+                <ion-datetime name="startDate" displayFormat="DD MMM YYYY" placeholder="startDate"
+                  [ngModel]="group.startDate" required></ion-datetime>
               </ion-item>
               <ion-item>
-                <ion-input name="endDate" placeholder="endDate" type="date" [ngModel]="group.endDate" required>
-                </ion-input>
+                <ion-datetime name="endDate" displayFormat="DD MMM YYYY" placeholder="endDate" [ngModel]="group.endDate"
+                  required></ion-datetime>
               </ion-item>
               <ion-item>
                 <ion-input name="loanAmount" placeholder="loanAmount" type="number" [ngModel]="group.loanAmount"
@@ -55,14 +55,8 @@
               </ion-item>
               <ion-item>
                 <ion-label>Add Users</ion-label>
-                <ionic-selectable
-                  item-content
-                  [(ngModel)]="selectedUser"
-                  [items]="users"
-                  itemValueField="id"
-                  itemTextField="name"
-                  [canSearch]="true"
-                  (onChange)="userChange($event)"
+                <ionic-selectable name="groupUsers" item-content [(ngModel)]="selectedUser" [items]="users"
+                  itemValueField="id" itemTextField="name" [canSearch]="true" (onChange)="userChange($event)"
                   [isMultiple]="true">
                 </ionic-selectable>
               </ion-item>

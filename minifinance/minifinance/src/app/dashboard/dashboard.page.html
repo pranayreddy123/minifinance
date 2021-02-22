@@ -4,46 +4,40 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  >
-  <form  #logForm="ngForm" (ngSubmit)="submit(logForm.value)">
-    
-          <div>
-  
-            <div class="row">
-             
-              <ion-item class="form-group">
-            <label class="control-label" for="Group">Group:</label>
-            <select name="group" *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)" class="form-control input-lg" id="group">
-            <option value="0">Select Group</option>
-            <option *ngFor="let group of getGroups()" value= {{group.id}}>{{group.name}}</option>
-            </select>
-          </ion-item>
-             
-            <ion-item class="form-group">
-            <label class="control-label" for="Users">Users:</label>
-            <select name="user" *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)" class="form-control input-lg" id="user">
-            <option value="0">Select User</option>
-            <option *ngFor="let user of users" value= {{user.id}}>{{user.name}}</option>
-            </select>
-          </ion-item>
-            <ion-item>
-              <ion-input name="collectionAmount" placeHolder="amountCollected" type="number" [ngModel]="log.collectionAmount" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="actualDate" type="date" placeHolder="date" [ngModel]="log.actualDate" required></ion-input>
-            </ion-item>
-            
-           
+<ion-content>
+  <form #logForm="ngForm" (ngSubmit)="submit(logForm.value)">
+    <ion-item>
+      <label for="Group">Group: </label>
+      <select name="group" *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)"
+        id="group">
+        <option value="0">Select Group</option>
+        <option *ngFor="let group of getGroups()" value={{group.id}}>{{group.name}}</option>
+      </select>
+    </ion-item>
 
-            <div padding>
-              <ion-button size="large" type="submit" [disabled]="logForm.invalid" expand="block">submit</ion-button>
-            </div>
-             
-            </div>
-            </div>
+    <ion-item>
+      <label for="Users">Users: </label>
+      <select name="user" *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)"
+        id="user">
+        <option value="0">Select User</option>
+        <option *ngFor="let user of users" value={{user.id}}>{{user.name}}</option>
+      </select>
+    </ion-item>
+    <ion-item>
+      <ion-input name="collectionAmount" placeHolder="amountCollected" type="number" [ngModel]="log.collectionAmount"
+        required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-datetime name="actualDate" displayFormat="DD MMM YYYY" placeholder="actualDate" [ngModel]="log.actualDate"
+        required></ion-datetime>
+    </ion-item>
+    <div padding>
+      <ion-button size="large" type="submit" [disabled]="logForm.invalid" expand="block">submit</ion-button>
+    </div>
 
 
-            
-        
+
+
+
   </form>
 </ion-content>

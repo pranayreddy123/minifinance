@@ -12,6 +12,7 @@ export class SettingsPage implements OnInit {
   rateOfInterest=0;
   pendingAmount=0;
   profitAmount=0;
+  ageOfAccount=0;
   constructor() { }
 
   ngOnInit() {
