@@ -8,8 +8,8 @@
 
 <div class="container">
   
-  <div class="row">
-   
+
+  <ion-item>
   <div class="form-group">
   <label class="control-label" for="Group">Group:</label>
   <select *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)" class="form-control input-lg" id="group">
@@ -17,7 +17,8 @@
   <option *ngFor="let group of getGroups()" value= {{group.groupId}}>{{group.groupName}}</option>
   </select>
   </div>
-   
+    </ion-item>
+    <ion-item>
   <div class="form-group">
   <label class="control-label" for="Users">Users:</label>
   <select *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)" class="form-control input-lg" id="user">
@@ -25,8 +26,9 @@
   <option *ngFor="let user of users" value= {{user.userId}}>{{user.userName}}</option>
   </select>
   </div>
+  </ion-item>
    
-  </div>
+
 
   <ion-item>
     <ion-label>Total Amount       : {{totalAmount}}</ion-label>
