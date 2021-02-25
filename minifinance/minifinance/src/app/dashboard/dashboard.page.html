@@ -11,7 +11,7 @@
       <select name="group" *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)"
         id="group">
         <option value="0">Select Group</option>
-        <option *ngFor="let group of getGroups()" value={{group.id}}>{{group.name}}</option>
+        <option *ngFor="let group of getGroups()" value={{group.groupId}}>{{group.groupName}}</option>
       </select>
     </ion-item>
 
@@ -20,7 +20,7 @@
       <select name="user" *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)"
         id="user">
         <option value="0">Select User</option>
-        <option *ngFor="let user of users" value={{user.id}}>{{user.name}}</option>
+        <option *ngFor="let user of users" value={{user.userId}}>{{user.userName}}</option>
       </select>
     </ion-item>
     <ion-item>

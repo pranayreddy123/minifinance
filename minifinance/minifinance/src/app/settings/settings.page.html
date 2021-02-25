@@ -14,15 +14,15 @@
   <label class="control-label" for="Group">Group:</label>
   <select *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)" class="form-control input-lg" id="group">
   <option value="ALL">ALL</option>
-  <option *ngFor="let group of getGroups()" value= {{group.id}}>{{group.name}}</option>
+  <option *ngFor="let group of getGroups()" value= {{group.groupId}}>{{group.groupName}}</option>
   </select>
   </div>
    
   <div class="form-group">
   <label class="control-label" for="Users">Users:</label>
   <select *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)" class="form-control input-lg" id="user">
-  <option value="ALL">ALL</option>
-  <option *ngFor="let user of users" value= {{user.id}}>{{user.name}}</option>
+  <option value="0">ALL</option>
+  <option *ngFor="let user of users" value= {{user.userId}}>{{user.userName}}</option>
   </select>
   </div>
    
@@ -32,10 +32,13 @@
     <ion-label>Total Amount       : {{totalAmount}}</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>Loan Amount        : {{loanAmount}}</ion-label>
+  <ion-item>
+    <ion-label>Investment    :      {{investment}}</ion-label>
+  </ion-item>
+  <ion-label>collectedAmount  :    {{collectedAmount}}</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>Interest Amount  : {{totalAmount}}  [{{rateOfInterest}}%]</ion-label>
+    <ion-label>Interest Amount  : {{totalAmount*rateOfInterest/100}}  [{{rateOfInterest}}%]</ion-label>
   </ion-item>
   <ion-item>
     <ion-label>Pending Amount    : {{pendingAmount}}</ion-label>

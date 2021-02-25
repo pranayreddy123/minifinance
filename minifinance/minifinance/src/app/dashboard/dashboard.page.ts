@@ -10,10 +10,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class DashboardPage implements OnInit {
   log: any = { 'collectionAmount': Number, 'actualDate': Date }
+  groups:any; 
   constructor(private http: HttpClient) { }
   selectedGroup = 0;
   selectedUser = 0;
-  users = [];
+  users:any = [];
 
   submit(log: any) {
    log.actualDate = log.actualDate.split('T')[0];
@@ -26,64 +27,60 @@ export class DashboardPage implements OnInit {
     };
   this.http.post("http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/collection", JSON.stringify(log), httpOptions
     ).subscribe(data => {
-      console.log(data['_body']);
+      console.log(data);
     }, error => {
       console.log(error);
     });
   }
-  onSelectGroup(group_id: number) {
-    this.selectedGroup = group_id;
-
+  onSelectGroup(groupId: number) {
+    this.selectedGroup = groupId;
+console.log("groupId"+groupId)
     this.http.get(
-      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup?groupID="+group_id
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup/"+groupId
     ).subscribe(data => {
-      alert(JSON.stringify(data['_body']));
+      alert(JSON.stringify(data));
+      this.users = data;
     }, error => {
       alert(error);
     });
     this.selectedUser = 0;
-    this.users = this.getUsers().filter((item) => {
-      return item.group_id === Number(group_id)
-    });
+    
   }
-  onSelectUser(user_id: number) {
-    this.selectedUser = user_id;
+  onSelectUser(userId: number) {
+    this.selectedUser = userId;
   }
-  getGroups() {
-
+  get(){
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups"
     ).subscribe(data => {
-      alert(JSON.stringify(data['_body']));
+      console.log(data["groupsAll"])
+      this.groups =data["groupsAll"];
+    
     }, error => {
       alert(error);
     });
-    return [
-      { id: 1, name: 'Group1' },
-      { id: 2, name: 'Group2' },
-      { id: 3, name: 'Group3' }
-    ];
+  }
+  getGroups() {
+
+    return this.groups;
   }
   getUsers() {
 
     this.http.get(
-      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup?groupID="+this.selectedGroup 
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup/"+this.selectedGroup 
     ).subscribe(data => {
-      alert(JSON.stringify(data['_body']));
+      console.log(JSON.stringify(data));
+      alert(JSON.stringify(data));
+      
+      this.users = data;
     }, error => {
       alert(error);
     });
-    return [
-      { id: 1, group_id: 1, name: 'User1 of group1' },
-      { id: 2, group_id: 1, name: 'User2 of group2' },
-      { id: 3, group_id: 2, name: 'User1 of group2' },
-      { id: 4, group_id: 2, name: 'User2 of group2' },
-      { id: 5, group_id: 3, name: 'User1 of group3' },
-      { id: 6, group_id: 3, name: 'User2 of group3' },
-    ]
+  
   }
 
   ngOnInit() {
+   this.get();
     this.log = { 'collectionAmount': null, 'actualDate': null }
   }
 

@@ -7,84 +7,97 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-  loanAmount=0;
-  totalAmount=0;
-  interestAmount=0;
-  rateOfInterest=0;
-  pendingAmount=0;
-  profitAmount=0;
-  ageOfAccount=0;
-  constructor(private http: HttpClient) { 
+  collectedAmount = 0;
+  totalAmount = 0;
+  investment =0;
+  interestAmount = 0;
+  rateOfInterest = 0;
+  pendingAmount = 0;
+  profitAmount = 0;
+  ageOfAccount = 0;
+
+
+  groups: any;
+  constructor(private http: HttpClient) {
+
+
+  }
+
+  ngOnInit() {
+
     this.http.get(
-      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary?groupID=All&userID=ALL"
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary/All/ALL"
     ).subscribe(data => {
-      alert(JSON.stringify(data['_body']));
+      alert(JSON.stringify(data));
+    }, error => {
+      alert(error);
+    });
+    this.groups = this.getGroupNames();
+  }
+  selectedGroup = 0;
+  selectedUser = 0;
+
+  users: any = [];
+
+
+  onSelectGroup(group_id: number) {
+    this.selectedGroup = group_id;
+
+    this.http.get(
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup/" + group_id
+    ).subscribe(data => {
+      console.log(data);
+      // alert(JSON.stringify(data));
+      this.users = data;
+    }, error => {
+      alert(error);
+    });
+    this.http.get(
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary/" + this.selectedGroup + "/ALL"
+    ).subscribe(data => {
+      this.totalAmount = data["totalAmount"];
+      this.investment = data["investment"];
+      this.rateOfInterest = data["rateOfInterest"];
+      this.pendingAmount = data["pendingAmount"];
+      this.profitAmount = data["profit"];
+      this.ageOfAccount = data["ageOfAccount"];
+      this.collectedAmount = data["collectedAmount"];
+
+      alert(JSON.stringify(data));
+    }, error => {
+      alert(error);
+    });
+  }
+
+  onSelectUser(user_id: number) {
+    this.selectedUser = user_id;
+    this.http.get(
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary/" + this.selectedGroup + "/" + user_id
+    ).subscribe(data => {
+      console.log(JSON.stringify(data));
     }, error => {
       alert(error);
     });
 
   }
 
-  ngOnInit() {
-  }
-  selectedGroup = 0;
-  selectedUser = 0;
-   
-  users = [];
-  cities = [];
-   
-   
-  onSelectGroup(group_id: number) {
-  this.selectedGroup = group_id;
+  getGroupNames() {
+    this.http.get(
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups"
+    ).subscribe(data => {
+      console.log(data["groupsAll"])
+      this.groups = data["groupsAll"];
 
-  this.http.get(
-    "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup?groupID="+group_id
-  ).subscribe(data => {
-    alert(JSON.stringify(data['_body']));
-  }, error => {
-    alert(error);
-  });
-  this.http.get(
-    "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary?groupID="+this.selectedGroup+"& userID=ALL"
-  ).subscribe(data => {
-    this.users = data['_body'];
-    alert(JSON.stringify(data['_body']));
-  }, error => {
-    alert(error);
-  });
-  this.selectedUser = 0;
+    }, error => {
+      alert(error);
+    });
   }
-   
-  onSelectUser(user_id: number) {
-  this.selectedUser = user_id;
-  this.http.get(
-    "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary?groupID="+this.selectedGroup+"&userID="+user_id
-  ).subscribe(data => {
-    alert(JSON.stringify(data['_body']));
-  }, error => {
-    alert(error);
-  });
-  
-  }
-   
+
   getGroups() {
-  return [
-  { id: 1, name: 'Group1' },
-  { id: 2, name: 'Group2' },
-  { id: 3, name: 'Group3' }
-  ];
+    return this.groups;
   }
-   
-  getUsers() {
-  return [
-  { id: 1, group_id: 1, name: 'User1 of group1' },
-  { id: 2, group_id: 1, name: 'User2 of group2' },
-  { id: 3, group_id: 2, name: 'User1 of group2' },
-  { id: 4, group_id: 2, name: 'User2 of group2' },
-  { id: 5, group_id: 3, name: 'User1 of group3' },
-  { id: 6, group_id: 3, name: 'User2 of group3' },
-  ]
-  }
-   
+
+
+
 
 }
