@@ -9,13 +9,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-  log: Object = { 'collectionAmount': Number, 'actualDate': Date }
+  log: any = { 'collectionAmount': Number, 'actualDate': Date }
   constructor(private http: HttpClient) { }
   selectedGroup = 0;
   selectedUser = 0;
   users = [];
 
-  submit(log: Object) {
+  submit(log: any) {
+   log.actualDate = log.actualDate.split('T')[0];
     alert(JSON.stringify(log))
     const httpOptions = {
       headers: new HttpHeaders({

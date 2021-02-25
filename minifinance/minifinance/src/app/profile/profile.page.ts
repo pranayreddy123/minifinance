@@ -85,6 +85,8 @@ export class ProfilePage implements OnInit {
 
   submitGroup(group: any) {
     group.groupUsers=this.selectedGroupUsers;
+    group.startDate = group.startDate.split('T')[0];
+    group.endDate = group.endDate.split('T')[0];
     alert(JSON.stringify(group))
     const httpOptions = {
       headers: new HttpHeaders({
