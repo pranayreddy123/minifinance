@@ -23,7 +23,7 @@ export class DashboardPage implements OnInit {
         //'Authorization': 'my-auth-token'
       })
     };
-  this.http.post("http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/collection", JSON.stringify(log), httpOptions
+  this.http.post("http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/collection", JSON.stringify(log), httpOptions
     ).subscribe(data => {
       console.log(data['_body']);
     }, error => {
@@ -34,7 +34,7 @@ export class DashboardPage implements OnInit {
     this.selectedGroup = group_id;
 
     this.http.get(
-      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/usersByGroup?groupID="+group_id
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup?groupID="+group_id
     ).subscribe(data => {
       alert(JSON.stringify(data['_body']));
     }, error => {
@@ -51,7 +51,7 @@ export class DashboardPage implements OnInit {
   getGroups() {
 
     this.http.get(
-      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/groups"
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups"
     ).subscribe(data => {
       alert(JSON.stringify(data['_body']));
     }, error => {
@@ -66,7 +66,7 @@ export class DashboardPage implements OnInit {
   getUsers() {
 
     this.http.get(
-      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/usersByGroup?groupID="+this.selectedGroup 
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup?groupID="+this.selectedGroup 
     ).subscribe(data => {
       alert(JSON.stringify(data['_body']));
     }, error => {

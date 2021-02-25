@@ -24,7 +24,7 @@ export class ProfilePage implements OnInit {
   constructor(private http: HttpClient) {  
 
     this.http.get(
-      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/users"
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users"
     ).subscribe(data => {
       alert(JSON.stringify(data['_body']));
     }, error => {
@@ -95,7 +95,7 @@ export class ProfilePage implements OnInit {
     
     console.log(JSON.stringify(group))
     this.http.post(
-      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups",JSON.stringify(group), httpOptions 
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups",JSON.stringify(group), httpOptions 
    ).subscribe(data => {
     console.log(data['_body']);
    // form.controls['groupMessage'].value == data['_body'];

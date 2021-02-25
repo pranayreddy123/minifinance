@@ -16,7 +16,7 @@ export class SettingsPage implements OnInit {
   ageOfAccount=0;
   constructor(private http: HttpClient) { 
     this.http.get(
-      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/summary?groupID=All&userID=ALL"
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary?groupID=All&userID=ALL"
     ).subscribe(data => {
       alert(JSON.stringify(data['_body']));
     }, error => {
@@ -38,14 +38,14 @@ export class SettingsPage implements OnInit {
   this.selectedGroup = group_id;
 
   this.http.get(
-    "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/usersByGroup?groupID="+group_id
+    "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup?groupID="+group_id
   ).subscribe(data => {
     alert(JSON.stringify(data['_body']));
   }, error => {
     alert(error);
   });
   this.http.get(
-    "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/summary?groupID="+this.selectedGroup+"& userID=ALL"
+    "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary?groupID="+this.selectedGroup+"& userID=ALL"
   ).subscribe(data => {
     this.users = data['_body'];
     alert(JSON.stringify(data['_body']));
@@ -58,7 +58,7 @@ export class SettingsPage implements OnInit {
   onSelectUser(user_id: number) {
   this.selectedUser = user_id;
   this.http.get(
-    "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/summary?groupID="+this.selectedGroup+"&userID="+user_id
+    "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary?groupID="+this.selectedGroup+"&userID="+user_id
   ).subscribe(data => {
     alert(JSON.stringify(data['_body']));
   }, error => {
