@@ -22,6 +22,15 @@ export class ProfilePage implements OnInit {
   selectedGroupUsers:[]
 
   constructor(private http: HttpClient) {  
+
+    this.http.get(
+      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/users"
+    ).subscribe(data => {
+      alert(JSON.stringify(data['_body']));
+    }, error => {
+      alert(error);
+    });
+    
   this.users = [
     { id: 1, name: 'pedi, reddy' },
     { id: 2, name: 'praharsh' },
@@ -40,8 +49,11 @@ export class ProfilePage implements OnInit {
     component: IonicSelectableComponent,
     value: any
   }) {
-   this.selectedGroupUsers = event.value;
-   // alert(JSON.stringify(event.value));
+    if(event.value.length<11){
+      this.selectedGroupUsers = event.value;
+   }else{
+   alert("Max 10 users are allowed in group");
+   }
   }
   submitUser(user: Object) {
     alert(JSON.stringify(user))
@@ -56,8 +68,8 @@ export class ProfilePage implements OnInit {
     
 
 
-    this.http.post(
-      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/createUser", JSON.stringify(user), httpOptions
+   this.http.post(
+      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users", JSON.stringify(user), httpOptions
     ).subscribe(data => {
       console.log(data['_body']);
      // alert(data['_body'])
@@ -67,6 +79,7 @@ export class ProfilePage implements OnInit {
       console.log(JSON.stringify(error));
       alert(JSON.stringify(error))
     });
+    
 
   }
 
@@ -82,7 +95,7 @@ export class ProfilePage implements OnInit {
     
     console.log(JSON.stringify(group))
     this.http.post(
-      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/createUser",JSON.stringify(group), httpOptions 
+      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups",JSON.stringify(group), httpOptions 
    ).subscribe(data => {
     console.log(data['_body']);
    // form.controls['groupMessage'].value == data['_body'];

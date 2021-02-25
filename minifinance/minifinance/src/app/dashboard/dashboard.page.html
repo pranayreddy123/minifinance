@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="warning">
-    <ion-title>Log Details</ion-title>
+    <ion-title>Log Collection</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -24,11 +24,11 @@
       </select>
     </ion-item>
     <ion-item>
-      <ion-input name="collectionAmount" placeHolder="amountCollected" type="number" [ngModel]="log.collectionAmount"
+      <ion-input name="collectionAmount" placeHolder="amountCollected" type="number" min="0" [ngModel]="log.collectionAmount"
         required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-datetime name="actualDate" displayFormat="DD MMM YYYY" placeholder="actualDate" [ngModel]="log.actualDate"
+      <ion-datetime name="actualDate" min="2020-01-01" max="2099-12-31" displayFormat="DD MMM YYYY" placeholder="actualDate" [ngModel]="log.actualDate"
         required></ion-datetime>
     </ion-item>
     <div padding>

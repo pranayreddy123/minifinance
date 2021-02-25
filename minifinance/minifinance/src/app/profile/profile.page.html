@@ -30,27 +30,27 @@
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="duration" placeholder="duration" type="number" [ngModel]="group.duration" required>
+                <ion-input name="duration" placeholder="duration" type="number" min="1" [ngModel]="group.duration" required>
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-datetime name="startDate" displayFormat="DD MMM YYYY" placeholder="startDate"
+                <ion-datetime name="startDate" min="2020-01-01" max="2099-12-31" displayFormat="DD MMM YYYY" placeholder="startDate"
                   [ngModel]="group.startDate" required></ion-datetime>
               </ion-item>
               <ion-item>
-                <ion-datetime name="endDate" displayFormat="DD MMM YYYY" placeholder="endDate" [ngModel]="group.endDate"
+                <ion-datetime name="endDate" min="2020-01-01" max="2099-12-31" displayFormat="DD MMM YYYY" placeholder="endDate" [ngModel]="group.endDate"
                   required></ion-datetime>
               </ion-item>
               <ion-item>
-                <ion-input name="loanAmount" placeholder="loanAmount" type="number" [ngModel]="group.loanAmount"
+                <ion-input name="loanAmount" placeholder="loanAmount" type="number" min="1" [ngModel]="group.loanAmount"
                   required></ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="interestRate" placeholder="interestRate" type="number" [ngModel]="group.interestRate"
+                <ion-input name="interestRate" placeholder="interestRate" type="number" min="1" [ngModel]="group.interestRate"
                   required></ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="investment" placeholder="investment" type="number" [ngModel]="group.investment"
+                <ion-input name="investment" placeholder="investment" type="number" min="0" [ngModel]="group.investment"
                   required></ion-input>
               </ion-item>
               <ion-item>
@@ -96,7 +96,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-input name="phoneNumber" placeholder="phoneNumber" type="number" [ngModel]="user.phoneNumber"
+                <ion-input name="phoneNumber" placeholder="phoneNumber" type="number" minlength="10" maxlength="10"  [ngModel]="user.phoneNumber"
                   required></ion-input>
               </ion-item>
 

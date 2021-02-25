@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-settings',
@@ -13,7 +14,16 @@ export class SettingsPage implements OnInit {
   pendingAmount=0;
   profitAmount=0;
   ageOfAccount=0;
-  constructor() { }
+  constructor(private http: HttpClient) { 
+    this.http.get(
+      "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/summary?groupID=All&userID=ALL"
+    ).subscribe(data => {
+      alert(JSON.stringify(data['_body']));
+    }, error => {
+      alert(error);
+    });
+
+  }
 
   ngOnInit() {
   }
@@ -26,18 +36,35 @@ export class SettingsPage implements OnInit {
    
   onSelectGroup(group_id: number) {
   this.selectedGroup = group_id;
-  this.selectedUser = 0;
-  this.cities = [];
-  this.users = this.getUsers().filter((item) => {
-  return item.group_id === Number(group_id)
+
+  this.http.get(
+    "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/usersByGroup?groupID="+group_id
+  ).subscribe(data => {
+    alert(JSON.stringify(data['_body']));
+  }, error => {
+    alert(error);
   });
+  this.http.get(
+    "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/summary?groupID="+this.selectedGroup+"& userID=ALL"
+  ).subscribe(data => {
+    this.users = data['_body'];
+    alert(JSON.stringify(data['_body']));
+  }, error => {
+    alert(error);
+  });
+  this.selectedUser = 0;
   }
    
   onSelectUser(user_id: number) {
   this.selectedUser = user_id;
-  this.cities = this.getCity().filter((item) => {
-  return item.user_id === Number(user_id)
+  this.http.get(
+    "http://ec2-18-191-169-9.us-east-2.compute.amazonaws.com:8080/mini-finance/summary?groupID="+this.selectedGroup+"&userID="+user_id
+  ).subscribe(data => {
+    alert(JSON.stringify(data['_body']));
+  }, error => {
+    alert(error);
   });
+  
   }
    
   getGroups() {
@@ -59,26 +86,5 @@ export class SettingsPage implements OnInit {
   ]
   }
    
-  getCity() {
-  return [
-  { id: 1, user_id: 1, name: 'City1' },
-  { id: 2, user_id: 1, name: 'City11' },
-  { id: 3, user_id: 1, name: 'City12' },
-  { id: 4, user_id: 1, name: 'City13' },
-  { id: 5, user_id: 2, name: 'City14' },
-  { id: 6, user_id: 2, name: 'City15' },
-  { id: 7, user_id: 2, name: 'City16' },
-  { id: 8, user_id: 2, name: 'City17' },
-  { id: 9, user_id: 3, name: 'City18' },
-  { id: 10, user_id: 3, name: 'City19' },
-  { id: 11, user_id: 3, name: 'City20' },
-  { id: 12, user_id: 4, name: 'City21' },
-  { id: 13, user_id: 4, name: 'City23' },
-  { id: 14, user_id: 5, name: 'City24' },
-  { id: 15, user_id: 5, name: 'City25' },
-  { id: 16, user_id: 5, name: 'City26' },
-  { id: 17, user_id: 6, name: 'City27' },
-  { id: 18, user_id: 6, name: 'City28' },
-  ]
-  }
+
 }
