@@ -28,7 +28,7 @@ export class SettingsPage implements OnInit {
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary/All/ALL"
     ).subscribe(data => {
-      alert(JSON.stringify(data));
+      //alert(JSON.stringify(data));
     }, error => {
       alert(error);
     });
@@ -63,7 +63,7 @@ export class SettingsPage implements OnInit {
       this.ageOfAccount = data["ageOfAccount"];
       this.collectedAmount = data["collectedAmount"];
       console.log(JSON.stringify(data));
-     // alert(JSON.stringify(data));
+     // alert(JSON.stringify(data))falert;
     }, error => {
       alert(error);
     });
@@ -74,6 +74,13 @@ export class SettingsPage implements OnInit {
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary/" + this.selectedGroup + "/" + user_id
     ).subscribe(data => {
+      this.totalAmount = data["totalAmount"];
+      this.investment = data["investment"];
+      this.rateOfInterest = data["rateOfInterest"];
+      this.pendingAmount = data["pendingAmount"];
+      this.profitAmount = data["profit"];
+      this.ageOfAccount = data["ageOfAccount"];
+      this.collectedAmount = data["collectedAmount"];
       console.log(JSON.stringify(data));
     }, error => {
       alert(error);
