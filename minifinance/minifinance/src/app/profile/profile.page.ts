@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
   user: Object = {'firstName':String,'lastName':Number,'address':String,'phoneNumber':Number,'aadharNumber':String,'dowo':String,'email':String};
   type: string = "";
   isItemAvailable = false;
-  users: User[];
+  users: any ;
   selectedUser: User;
   selectedGroupUsers:[]
 
@@ -26,25 +26,11 @@ export class ProfilePage implements OnInit {
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users"
     ).subscribe(data => {
-      alert(JSON.stringify(data['_body']));
+      this.users= data;
     }, error => {
       alert(error);
     });
-    
-  this.users = [
-    { id: 1, name: 'pedi, reddy' },
-    { id: 2, name: 'praharsh' },
-    { id: 3, name: 'Swathi' },
-    { id: 4, name: 'Sandhya' },
-    { id: 5, name: 'Mallesh' },
-    { id: 6, name: 'Sanvi' },
-    { id: 7, name: 'John' },
-    { id: 8, name: 'Ravi' },
-    { id: 9, name: 'Raj Kumar' },
-    { id: 10, name: 'Reddy reddy' },
-    { id: 11, name: 'Anugu, reddy' },
-    { id: 12, name: 'Bala, raju' }
-  ];}
+}
   userChange(event: {
     component: IonicSelectableComponent,
     value: any
@@ -71,7 +57,7 @@ export class ProfilePage implements OnInit {
    this.http.post(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users", JSON.stringify(user), httpOptions
     ).subscribe(data => {
-      console.log(data['_body']);
+      console.log(data);
      // alert(data['_body'])
      // form.controls['userMessage'].value == data['_body'];
      }, error => {
@@ -99,7 +85,7 @@ export class ProfilePage implements OnInit {
     this.http.post(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups",JSON.stringify(group), httpOptions 
    ).subscribe(data => {
-    console.log(data['_body']);
+    console.log(data);
    // form.controls['groupMessage'].value == data['_body'];
    }, error => {
     //form.controls['groupMessage'].value == error;
@@ -108,16 +94,6 @@ export class ProfilePage implements OnInit {
 
   }
 
-  getUsers() {
-    return [
-    { id: 1, name: 'User1 ' },
-    { id: 2, name: 'User2 ' },
-    { id: 3, name: 'User3' },
-    { id: 4, name: 'User4' },
-    { id: 5, name: 'User5' },
-    { id: 6, name: 'User6' },
-    ]
-    }
 
 
   ngOnInit() {
