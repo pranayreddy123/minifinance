@@ -62,8 +62,8 @@ export class SettingsPage implements OnInit {
       this.profitAmount = data["profit"];
       this.ageOfAccount = data["ageOfAccount"];
       this.collectedAmount = data["collectedAmount"];
-
-      alert(JSON.stringify(data));
+      console.log(JSON.stringify(data));
+     // alert(JSON.stringify(data));
     }, error => {
       alert(error);
     });

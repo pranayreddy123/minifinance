@@ -18,7 +18,8 @@ export class DashboardPage implements OnInit {
 
   submit(log: any) {
    log.actualDate = log.actualDate.split('T')[0];
-    alert(JSON.stringify(log))
+   console.log(JSON.stringify(log));
+   // alert(JSON.stringify(log))
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -38,7 +39,8 @@ console.log("groupId"+groupId)
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup/"+groupId
     ).subscribe(data => {
-      alert(JSON.stringify(data));
+      console.log(JSON.stringify(data));
+      //alert(JSON.stringify(data));
       this.users = data;
     }, error => {
       alert(error);
@@ -70,7 +72,7 @@ console.log("groupId"+groupId)
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup/"+this.selectedGroup 
     ).subscribe(data => {
       console.log(JSON.stringify(data));
-      alert(JSON.stringify(data));
+      //alert(JSON.stringify(data));
       
       this.users = data;
     }, error => {

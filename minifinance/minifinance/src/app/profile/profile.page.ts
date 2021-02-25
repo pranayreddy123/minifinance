@@ -42,7 +42,7 @@ export class ProfilePage implements OnInit {
    }
   }
   submitUser(user: Object) {
-    alert(JSON.stringify(user))
+    console.log(JSON.stringify(user));
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ export class ProfilePage implements OnInit {
      }, error => {
       //form.controls['userMessage'].value == error;
       console.log(JSON.stringify(error));
-      alert(JSON.stringify(error))
+    //  alert(JSON.stringify(error))
     });
     
 
@@ -73,7 +73,7 @@ export class ProfilePage implements OnInit {
     group.groupUsers=this.selectedGroupUsers;
     group.startDate = group.startDate.split('T')[0];
     group.endDate = group.endDate.split('T')[0];
-    alert(JSON.stringify(group))
+   // alert(JSON.stringify(group))
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
