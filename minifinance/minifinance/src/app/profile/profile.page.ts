@@ -23,15 +23,19 @@ export class ProfilePage implements OnInit {
   message:String;
 
   constructor(private http: HttpClient) {  
-
-    this.http.get(
-      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users"
-    ).subscribe(data => {
-      this.users= data;
-    }, error => {
-      alert(error);
-    });
+this.getUsers();
+   
 }
+getUsers(){
+  this.http.get(
+    "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users"
+  ).subscribe(data => {
+    this.users= data; 
+  }, error => {
+    alert(error);
+  });
+}
+
   userChange(event: {
     component: IonicSelectableComponent,
     value: any
@@ -60,6 +64,7 @@ export class ProfilePage implements OnInit {
     ).subscribe(data => {
       console.log(data);
       this.message = data["result"];
+      this.getUsers();
      // alert(data['_body'])
      // form.controls['userMessage'].value == data['_body'];
      }, error => {
