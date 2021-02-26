@@ -22,7 +22,8 @@ export class ProfilePage implements OnInit {
   selectedGroupUsers:[]
   message:String;
 
-  constructor(private http: HttpClient) {  
+  constructor(private http: HttpClient) { 
+    this.message = ''; 
    this.getUsers();
 }
 
@@ -37,7 +38,7 @@ getUsers(){
 }
   userChange(event: {
     component: IonicSelectableComponent,
-    value: any
+    value: any,
   }) {
     if(event.value.length<11){
       this.selectedGroupUsers = event.value;
@@ -56,16 +57,17 @@ getUsers(){
     console.log(JSON.stringify(user))
     
     
-
-
    this.http.post(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users", JSON.stringify(user), httpOptions
     ).subscribe(data => {
       console.log(data);
       this.message = data["result"];
+      //To clear the user form
       this.getUsers();
      // alert(data['_body'])
      // form.controls['userMessage'].value == data['_body'];
+     this.user=[];
+
      }, error => {
       //form.controls['userMessage'].value == error;
       console.log(JSON.stringify(error));
@@ -76,6 +78,7 @@ getUsers(){
   }
 
   submitGroup(group: any) {
+    this.message = '';
     group.groupUsers=this.selectedGroupUsers;
     group.startDate = group.startDate.split('T')[0];
     group.endDate = group.endDate.split('T')[0];
@@ -93,6 +96,8 @@ getUsers(){
    ).subscribe(data => {
    this.message = data["result"];
    // form.controls['groupMessage'].value == data['_body'];
+   //to clear the group
+   group = []
    }, error => {
     //form.controls['groupMessage'].value == error;
     console.log(error);
