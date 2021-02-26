@@ -22,7 +22,7 @@
   <div class="form-group">
   <label class="control-label" for="Users">Users:</label>
   <select *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)" class="form-control input-lg" id="user">
-  <option value="0">ALL</option>
+  <option value="ALL">ALL</option>
   <option *ngFor="let user of users" value= {{user.userId}}>{{user.userName}}</option>
   </select>
   </div>

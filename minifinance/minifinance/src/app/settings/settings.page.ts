@@ -15,6 +15,9 @@ export class SettingsPage implements OnInit {
   pendingAmount = 0;
   profitAmount = 0;
   ageOfAccount = 0;
+  selectedGroup:String;
+  selectedUser:String;
+  users: any = [];
 
 
   groups: any;
@@ -24,25 +27,27 @@ export class SettingsPage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.selectedGroup = "ALL";
+    this.selectedUser = "ALL";
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary/All/ALL"
     ).subscribe(data => {
-      //alert(JSON.stringify(data));
+      this.totalAmount = data["totalAmount"];
+      this.investment = data["investment"];
+      this.rateOfInterest = data["rateOfInterest"];
+      this.pendingAmount = data["pendingAmount"];
+      this.profitAmount = data["profit"];
+      this.ageOfAccount = data["ageOfAccount"];
+      this.collectedAmount = data["collectedAmount"];
     }, error => {
       alert(error);
     });
     this.groups = this.getGroupNames();
+    
   }
-  selectedGroup = 0;
-  selectedUser = 0;
-
-  users: any = [];
-
-
-  onSelectGroup(group_id: number) {
+  onSelectGroup(group_id: String) {
     this.selectedGroup = group_id;
-
+  if(group_id!= "ALL"){
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/usersByGroup/" + group_id
     ).subscribe(data => {
@@ -52,6 +57,7 @@ export class SettingsPage implements OnInit {
     }, error => {
       alert(error);
     });
+  }
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary/" + this.selectedGroup + "/ALL"
     ).subscribe(data => {
@@ -69,7 +75,7 @@ export class SettingsPage implements OnInit {
     });
   }
 
-  onSelectUser(user_id: number) {
+  onSelectUser(user_id: String) {
     this.selectedUser = user_id;
     this.http.get(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/summary/" + this.selectedGroup + "/" + user_id
