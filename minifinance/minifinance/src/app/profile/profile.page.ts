@@ -20,6 +20,7 @@ export class ProfilePage implements OnInit {
   users: any ;
   selectedUser: User;
   selectedGroupUsers:[]
+  message:String;
 
   constructor(private http: HttpClient) {  
 
@@ -58,6 +59,7 @@ export class ProfilePage implements OnInit {
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users", JSON.stringify(user), httpOptions
     ).subscribe(data => {
       console.log(data);
+      this.message = data["result"];
      // alert(data['_body'])
      // form.controls['userMessage'].value == data['_body'];
      }, error => {
@@ -85,7 +87,7 @@ export class ProfilePage implements OnInit {
     this.http.post(
       "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups",JSON.stringify(group), httpOptions 
    ).subscribe(data => {
-    console.log(data);
+   this.message = data["result"];
    // form.controls['groupMessage'].value == data['_body'];
    }, error => {
     //form.controls['groupMessage'].value == error;

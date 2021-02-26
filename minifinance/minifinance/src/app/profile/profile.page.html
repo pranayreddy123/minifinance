@@ -65,6 +65,10 @@
             <div padding>
               <ion-button size="large" type="submit" [disabled]="!groupForm.valid" expand="block">Submit</ion-button>
             </div>
+
+            <ion-item>
+              <ion-label>{{message}}</ion-label>
+            </ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -116,7 +120,9 @@
               <ion-button size="large" type="submit" [disabled]="userForm.invalid" expand="block">submit</ion-button>
             </div>
 
-
+            <ion-item>
+              <ion-label>{{message}}</ion-label>
+            </ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>

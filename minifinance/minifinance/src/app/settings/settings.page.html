@@ -43,7 +43,7 @@
     <ion-label>Interest Amount  : {{totalAmount*rateOfInterest/100}}  [{{rateOfInterest}}%]</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>Pending Amount    : {{pendingAmount}}</ion-label>
+    <ion-label>Pending Amount    : {{pendingAmount+totalAmount*rateOfInterest/100}}</ion-label>
   </ion-item>
   <ion-item>
     <ion-label>Profit Amount     : {{profitAmount}}</ion-label>
