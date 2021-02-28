@@ -85,7 +85,6 @@ submitUser(){
           ).subscribe((data: any) => { 
              this.isMessage = true;
             this.message = data["result"];
-            console.log(data);
             this.isUserForm.reset();
             this.message = data.result
             setTimeout( () => {
@@ -114,8 +113,7 @@ submitGroup() {
  ).subscribe((data: any) => {
   this.isMessage = true;
  this.message = data["result"];
- console.log(data);
- this.isUserForm.reset();
+ this.isUserGroupForm.reset();
  this.message = data.result
  setTimeout( () => {
    this.message = ''
