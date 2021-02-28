@@ -65,7 +65,7 @@ get formControls() {
 }
   userChange(event: {
     component: IonicSelectableComponent,
-    value: any
+    value: any,
   }) {
     if(event.value.length<11){
       this.selectedGroupUsers = event.value;
