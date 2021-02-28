@@ -17,7 +17,7 @@
 
   <div *ngIf="type=='group'">
 
-    <form #groupForm="ngForm" (ngSubmit)="submitGroup(groupForm.value)">
+    <form [formGroup]="isUserGroupForm" >
       <ion-grid>
         <ion-row color="primary" justify-content-center>
           <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
@@ -26,36 +26,36 @@
             </div>
             <div padding>
               <ion-item>
-                <ion-input name="groupName" placeholder="groupName" type="text" [ngModel]="group.groupName" required>
+                <ion-input name="groupName" placeholder="groupName" type="text" formControlName="groupName" required>
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="duration" placeholder="duration" type="number" min="1" [ngModel]="group.duration" required>
+                <ion-input name="duration" placeholder="duration" type="number" min="1" formControlName="duration" required>
                 </ion-input>
               </ion-item>
               <ion-item>
                 <ion-datetime name="startDate" min="2020-01-01" max="2099-12-31" displayFormat="DD MMM YYYY" placeholder="startDate"
-                  [ngModel]="group.startDate" required></ion-datetime>
+                formControlName="startDate" required></ion-datetime>
               </ion-item>
               <ion-item>
-                <ion-datetime name="endDate" min="2020-01-01" max="2099-12-31" displayFormat="DD MMM YYYY" placeholder="endDate" [ngModel]="group.endDate"
+                <ion-datetime name="endDate" min="2020-01-01" max="2099-12-31" displayFormat="DD MMM YYYY" placeholder="endDate" formControlName="endDate"
                   required></ion-datetime>
               </ion-item>
               <ion-item>
-                <ion-input name="loanAmount" placeholder="loanAmount" type="number" min="1" [ngModel]="group.loanAmount"
+                <ion-input name="loanAmount" placeholder="loanAmount" type="number" min="1" formControlName="loanAmount"
                   required></ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="interestRate" placeholder="interestRate" type="number" min="1" [ngModel]="group.interestRate"
+                <ion-input name="interestRate" placeholder="interestRate" type="number" min="1" formControlName="interestRate"
                   required></ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="investment" placeholder="investment" type="number" min="0" [ngModel]="group.investment"
+                <ion-input name="investment" placeholder="investment" type="number" min="0" formControlName="investment"
                   required></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label>Add Users</ion-label>
-                <ionic-selectable name="groupUsers" item-content [(ngModel)]="selectedUser" [items]="users"
+                <ionic-selectable name="groupUsers" item-content formControlName="groupUsers" [items]="users"
                   itemValueField="id" itemTextField="name" [canSearch]="true" (onChange)="userChange($event)"
                   [isMultiple]="true">
                 </ionic-selectable>
@@ -63,21 +63,20 @@
 
             </div>
             <div padding>
-              <ion-button size="large" type="submit" [disabled]="!groupForm.valid" expand="block">Submit</ion-button>
+              <ion-button size="large" type="submit" [disabled]="isUserGroupForm.invalid" (click)="submitGroup()" expand="block">Submit</ion-button>
             </div>
 
-            <ion-item>
+            <ion-item *ngIf="isMessage">
               <ion-label>{{message}}</ion-label>
             </ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>
     </form>
-
   </div>
   <div *ngIf="type=='user'">
-    <form #userForm="ngForm" (ngSubmit)="submitUser(userForm.value)">
-      <ion-grid>
+    <form [formGroup]="isUserForm">
+      <ion-grid >
         <ion-row color="primary" justify-content-center>
           <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
             <div text-center>
@@ -85,47 +84,48 @@
             </div>
             <div padding>
               <ion-item>
-                <ion-input name="fname" placeholder="firstName" type="text" [ngModel]="user.firstName" required>
+                <ion-input name="fname" placeholder="firstName" type="text" formControlName="fname" required>
                 </ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-input name="lname" placeholder="lastName" type="text" [ngModel]="user.lastName" required>
+                <ion-input name="lname" placeholder="lastName" type="text" formControlName="lname" required>
                 </ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-input name="address" placeholder="address" type="text" [ngModel]="user.address" required>
+                <ion-input name="address" placeholder="address" type="text" formControlName="address" required>
                 </ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-input name="phoneNumber" placeholder="phoneNumber" type="number" minlength="10" maxlength="10"  [ngModel]="user.phoneNumber"
+                <ion-input name="phoneNumber" placeholder="phoneNumber" type="number" minlength="10" maxlength="10"  formControlName="phoneNumber"
                   required></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-input name="aadharNumber" placeholder="aadharNumber" type="text" [ngModel]="user.aadharNumber"
+                <ion-input name="aadharNumber" placeholder="aadharNumber" type="text" formControlName="aadharNumber"
                   required></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-input name="dowo" placeholder="Do/Wo" type="text" [ngModel]="user.dowo" required></ion-input>
+                <ion-input name="dowo" placeholder="Do/Wo" type="text" formControlName="dowo" required></ion-input>
               </ion-item>
               <ion-item>
-                <ion-input name="email" placeholder="email" type="email" [ngModel]="user.email" required></ion-input>
+                <ion-input name="email" placeholder="email" type="email" formControlName="email" required></ion-input>
               </ion-item>
             </div>
             <div padding>
-              <ion-button size="large" type="submit" [disabled]="userForm.invalid" expand="block">submit</ion-button>
+              <ion-button size="large" type="submit" [disabled]="isUserForm.invalid" expand="block" (click)="submitUser()">submit</ion-button>
             </div>
-
-            <ion-item>
+            <ion-item *ngIf="isMessage">
               <ion-label>{{message}}</ion-label>
             </ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>
+     
+      
     </form>
   </div>
 </ion-content>

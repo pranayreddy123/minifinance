@@ -5,39 +5,35 @@
 </ion-header>
 
 <ion-content>
-  <form #logForm="ngForm" (ngSubmit)="submit(logForm.value)">
-    <ion-item>
-      <label for="Group">Group: </label>
-      <select name="group" *ngIf="getGroups()" [(ngModel)]="selectedGroup" (change)="onSelectGroup($event.target.value)"
-        id="group">
-        <option value="0">Select Group</option>
-        <option *ngFor="let group of getGroups()" value={{group.groupId}}>{{group.groupName}}</option>
-      </select>
-    </ion-item>
-
-    <ion-item>
-      <label for="Users">Users: </label>
-      <select name="user" *ngIf="users" [(ngModel)]="selecteduser" (change)="onSelectUser($event.target.value)"
-        id="user">
-        <option value="0">Select User</option>
-        <option *ngFor="let user of users" value={{user.userId}}>{{user.userName}}</option>
-      </select>
-    </ion-item>
-    <ion-item>
-      <ion-input name="collectionAmount" placeHolder="amountCollected" type="number" min="0" [ngModel]="log.collectionAmount"
-        required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-datetime name="actualDate" min="2020-01-01" max="2099-12-31" displayFormat="DD MMM YYYY" placeholder="actualDate" [ngModel]="log.actualDate"
-        required></ion-datetime>
-    </ion-item>
-    <div padding>
-      <ion-button size="large" type="submit" [disabled]="logForm.invalid" expand="block">submit</ion-button>
-    </div>
-
-
-
-
-
-  </form>
+<form [formGroup]="isLogForm">
+  <ion-item>
+    <label for="Group">Group: </label>
+    <select name="group"  formControlName="group"  (change)="onSelectGroup($event.target.value)"
+      id="group">
+      <option value="">Select Group</option>
+      <option *ngFor="let group of groups"  value={{group.groupId}}>{{group.groupName}}</option>
+    </select>
+  </ion-item>
+  <ion-item  *ngIf="isUser" >
+    <label for="Users">Users: </label>
+    <select name="user" formControlName="user" 
+      id="user">
+      <option value="">Select User</option>
+      <option *ngFor="let user of users"  value={{user.userId}}>{{user.userName}}</option>
+    </select>
+  </ion-item>
+  <ion-item>
+    <ion-input name="amount" id="amount" placeHolder="amountCollected" type="number" formControlName="collectionAmount"
+      ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-datetime name="actualDate"  id="date" min="2020-01-01" max="2099-12-31" displayFormat="DD MMM YYYY" placeholder="actualDate" formControlName="actualDate"
+      ></ion-datetime>
+  </ion-item>
+  <div padding>
+    <ion-button size="large" type="submit"  [disabled]="isLogForm.invalid"  expand="block" (click)="saveLogsdata()">submit</ion-button>
+  </div>
+    <span>{{message}}</span>
+  
+</form>
 </ion-content>

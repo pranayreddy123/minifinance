@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -11,29 +11,54 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class DashboardPage implements OnInit {
   log: any = { 'collectionAmount': Number, 'actualDate': Date }
   groups:any; 
-  constructor(private http: HttpClient) { }
+  isLogForm: FormGroup;
+  isUser: boolean = false;
+  message: any;
+  constructor(private http: HttpClient, private readonly formBuilder: FormBuilder) { }
   selectedGroup = 0;
   selectedUser = 0;
   users:any = [];
 
-  submit(log: any) {
-   log.actualDate = log.actualDate.split('T')[0];
-   console.log(JSON.stringify(log));
-   // alert(JSON.stringify(log))
-    const httpOptions = {
+  ngOnInit() {
+    this.buildForm();
+   this.get();
+    this.log = { 'collectionAmount': null, 'actualDate': null }
+  }
+  saveLogsdata(){
+       const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
         //'Authorization': 'my-auth-token'
       })
     };
-  this.http.post("http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/collection", JSON.stringify(log), httpOptions
-    ).subscribe(data => {
+    this.isLogForm.controls.actualDate.setValue(this.isLogForm.controls.actualDate.value.split('T')[0]);
+  this.http.post("http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/collection",this.isLogForm.value, httpOptions
+    ).subscribe((data: any) => {
       console.log(data);
+      this.isLogForm.reset();
+      this.isUser = false;
+      this.message = data.result
+      setTimeout( () => {
+        this.message = ''
+     }, 5000);
     }, error => {
       console.log(error);
     });
   }
+buildForm(){
+  this.isLogForm = this.formBuilder.group({
+    collectionAmount: ['', [Validators.required]],
+    actualDate: ['', [Validators.required]],
+    user: ['', Validators.required],
+    group: ['', Validators.required]
+  });
+}
+get formControls() {
+  return this.isLogForm.controls;
+}
+
   onSelectGroup(groupId: number) {
+    this.isUser = true;
     this.selectedGroup = groupId;
 console.log("groupId"+groupId)
     this.http.get(
@@ -81,9 +106,6 @@ console.log("groupId"+groupId)
   
   }
 
-  ngOnInit() {
-   this.get();
-    this.log = { 'collectionAmount': null, 'actualDate': null }
-  }
+ 
 
 }

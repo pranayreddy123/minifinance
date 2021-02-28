@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IonicSelectableComponent } from 'ionic-selectable';
 
@@ -13,18 +13,21 @@ class User {
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  group: any = {'groupName':String,'duration':Number,'startDate':Date,'endDate':Date,'loanAmount':Number,'interestRate':Number,'investment':Number,'groupUsers':[]};
-  user: Object = {'firstName':String,'lastName':Number,'address':String,'phoneNumber':Number,'aadharNumber':String,'dowo':String,'email':String};
   type: string = "";
   isItemAvailable = false;
   users: any ;
   selectedUser: User;
-  selectedGroupUsers:[]
+  selectedGroupUsers:any =[]
   message:String;
+  isUserForm: FormGroup;
+  isMessage: boolean = false;
+  isUserGroupForm: FormGroup;
 
-  constructor(private http: HttpClient) {  
+  constructor(private http: HttpClient, private formBuilder: FormBuilder) {  
 this.getUsers();
-   
+}
+ngOnInit() {
+  this.buildForm();
 }
 getUsers(){
   this.http.get(
@@ -35,7 +38,31 @@ getUsers(){
     alert(error);
   });
 }
-
+buildForm(){
+  this.isUserForm = this.formBuilder.group({
+    fname: ['', [Validators.required]],
+    lname: ['', [Validators.required]],
+    address: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
+    dowo: ['', Validators.required],
+    email: ['', Validators.required],
+    aadharNumber: ['', Validators.required]
+  });
+  this.isUserGroupForm = this.formBuilder.group({
+    groupName: ['', [Validators.required]],
+    duration: ['', [Validators.required]],
+    startDate: ['', Validators.required],
+    endDate: ['', Validators.required],
+    loanAmount: ['', Validators.required],
+    interestRate: ['', Validators.required],
+    investment: ['', Validators.required],
+    groupUsers: [[], Validators.required],
+  });
+  
+}
+get formControls() {
+  return this.isUserForm.controls;
+}
   userChange(event: {
     component: IonicSelectableComponent,
     value: any
@@ -46,67 +73,59 @@ getUsers(){
    alert("Max 10 users are allowed in group");
    }
   }
-  submitUser(user: Object) {
-    console.log(JSON.stringify(user));
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-        //'Authorization': 'my-auth-token'
-      })
-    };
-    console.log(JSON.stringify(user))
-    
-    
+submitUser(){
+  const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+          //'Authorization': 'my-auth-token'
+        })
+      };
+      this.http.post(
+            "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users", this.isUserForm.value, httpOptions
+          ).subscribe((data: any) => { 
+             this.isMessage = true;
+            this.message = data["result"];
+            console.log(data);
+            this.isUserForm.reset();
+            this.message = data.result
+            setTimeout( () => {
+              this.message = ''
+              this.isMessage = false;
+           }, 5000);
+            this.getUsers();
+           }, error => {
+            console.log(JSON.stringify(error));
+          });
+}
 
+submitGroup() {
+  this.isUserGroupForm.controls.startDate.setValue(this.isUserGroupForm.controls.startDate.value.split('T')[0]);
+  this.isUserGroupForm.controls.endDate.setValue(this.isUserGroupForm.controls.endDate.value.split('T')[0]);
+  this.isUserGroupForm.controls.groupUsers.setValue(this.selectedGroupUsers);
+ // alert(JSON.stringify(group))
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+      //'Authorization': 'my-auth-token'
+    })
+  };
+  this.http.post(
+    "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups",this.isUserGroupForm.value, httpOptions 
+ ).subscribe((data: any) => {
+  this.isMessage = true;
+ this.message = data["result"];
+ console.log(data);
+ this.isUserForm.reset();
+ this.message = data.result
+ setTimeout( () => {
+   this.message = ''
+   this.isMessage = false;
+}, 5000);
+ // form.controls['groupMessage'].value == data['_body'];
+ }, error => {
+  //form.controls['groupMessage'].value == error;
+  console.log(error);
+});
 
-   this.http.post(
-      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/users", JSON.stringify(user), httpOptions
-    ).subscribe(data => {
-      console.log(data);
-      this.message = data["result"];
-      this.getUsers();
-     // alert(data['_body'])
-     // form.controls['userMessage'].value == data['_body'];
-     }, error => {
-      //form.controls['userMessage'].value == error;
-      console.log(JSON.stringify(error));
-    //  alert(JSON.stringify(error))
-    });
-    
-
-  }
-
-  submitGroup(group: any) {
-    group.groupUsers=this.selectedGroupUsers;
-    group.startDate = group.startDate.split('T')[0];
-    group.endDate = group.endDate.split('T')[0];
-   // alert(JSON.stringify(group))
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-        //'Authorization': 'my-auth-token'
-      })
-    };
-    
-    console.log(JSON.stringify(group))
-    this.http.post(
-      "http://ec2-3-20-228-130.us-east-2.compute.amazonaws.com:8080/minifinan/mini-finance/groups",JSON.stringify(group), httpOptions 
-   ).subscribe(data => {
-   this.message = data["result"];
-   // form.controls['groupMessage'].value == data['_body'];
-   }, error => {
-    //form.controls['groupMessage'].value == error;
-    console.log(error);
-  });
-
-  }
-
-
-
-  ngOnInit() {
-    
-    this.group = {'groupName':null,'duration':null,'startDate':null,'endDate':null,'loanAmount':null,'interestRate':null};
-    this.user= {'firstName':null,'lastName':null,'address':null,'phoneNumber':null,'aadharNumber':null,'dowo':null,'email':null};
-  }
-
+}
 }
