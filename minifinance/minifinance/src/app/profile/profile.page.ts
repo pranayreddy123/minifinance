@@ -96,7 +96,6 @@ submitUser(){
             console.log(JSON.stringify(error));
           });
 }
-
 submitGroup() {
   this.isUserGroupForm.controls.startDate.setValue(this.isUserGroupForm.controls.startDate.value.split('T')[0]);
   this.isUserGroupForm.controls.endDate.setValue(this.isUserGroupForm.controls.endDate.value.split('T')[0]);
